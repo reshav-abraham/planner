@@ -18,8 +18,25 @@ import AddIcon from '@material-ui/icons/Add';
 
 export default function Dashboard() {
   const [plans, setPlans] = useState([""]);
+  const [creatingNewPlan, setCreatingNewPlan] = useState(false);
 
-  function createNewPlan (){
+  function creatNewPlan(){
+    return (
+      creatingNewPlan ? 
+        <div>
+          <Button onClick={()=>{addNewPlan()}}> Save </Button>
+          <Button onClick={()=>{setCreatingNewPlan(false)}}> Cancel </Button>
+        </div> 
+        : 
+        <div>
+          <p>Create New Plan</p>
+          <Button onClick={()=>{setCreatingNewPlan(true)}}><AddIcon /></Button>
+        </div>
+    );
+  }
+
+  function addNewPlan (){
+    setCreatingNewPlan(false);
     setPlans(
       plans.concat(
           <>
@@ -49,8 +66,7 @@ export default function Dashboard() {
       <div style={{"width":"20px"}}/>
       <Card style={{maxWidth:"200px"}}>
         <CardContent>
-          <p>Create New Plan</p>
-          <Button onClick={createNewPlan}><AddIcon /></Button>
+          {creatNewPlan()}
         </CardContent>
       </Card>
     </div>
