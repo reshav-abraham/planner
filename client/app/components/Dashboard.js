@@ -20,7 +20,6 @@ export default function Dashboard() {
   const [plans, setPlans] = useState(["1"]);
 
   function createNewPlan (){
-    // setInputList(inputList.concat(<Input key={inputList.length} />));
     setPlans(plans.concat(<PlannerCard key={plans.length}></PlannerCard>))
   }
 
