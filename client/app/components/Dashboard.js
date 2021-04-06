@@ -17,7 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 
 export default function Dashboard() {
-  const [plans, setPlans] = useState(["1"]);
+  const [plans, setPlans] = useState([""]);
 
   function createNewPlan (){
     setPlans(plans.concat(<PlannerCard key={plans.length}></PlannerCard>))
