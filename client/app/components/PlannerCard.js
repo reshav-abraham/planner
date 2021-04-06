@@ -24,9 +24,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PlannerCards() {
+export default function PlannerCard() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+
+function goToPlan(){
+  console.log("Going to plan!");
+}
 
   return (
     <Card className={classes.root}>
@@ -47,7 +51,7 @@ export default function PlannerCards() {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button onClick={goToPlan} size="small">Learn More</Button>
       </CardActions>
     </Card>
   );
