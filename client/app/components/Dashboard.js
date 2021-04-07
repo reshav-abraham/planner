@@ -6,7 +6,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
-
+import helloWorld from '../api/PlannerApi';
+import fetchData from '../api/PlannerApi';
+import { async } from 'regenerator-runtime';
 
 // Card styles
 
@@ -18,15 +20,16 @@ import TextField from '@material-ui/core/TextField';
 
 
 export default function Dashboard() {
-  const [plans, setPlans] = useState([""]);
+  const [plans, setPlans] = useState([]);
   const [creatingNewPlan, setCreatingNewPlan] = useState(false);
+  const [planData, setPlanData] = useState({})
 
-  function creatNewPlan(){
+  function createNewPlan(){
     return (
       creatingNewPlan ? 
         <div style={{}}>
           <TextField style={{width:"100px"}}/>
-          <div style={{display:"flex", "white-space": "nowrap"}}>
+          <div style={{display:"flex", whiteSpace: "nowrap"}}>
             <Button onClick={()=>{addNewPlan()}}> Save </Button>
             <Button onClick={()=>{setCreatingNewPlan(false)}}> Cancel </Button>
           </div>
@@ -39,24 +42,12 @@ export default function Dashboard() {
     );
   }
 
-  function addNewPlan (){
+  const addNewPlan = async () => {
     setCreatingNewPlan(false); 
     // send requist to add plan
-    setPlans(
-      plans.concat(
-          <>
-          <PlannerCard key={plans.length}></PlannerCard>
-          <div style={{"width":"20px"}}/>
-          </>
-        ))
-  }
-
-  function displayPlans (){
-    const numbers = [1, 2, 3, 4, 5];
-    const listItems = plans.map((plan) =>
-    <PlannerCard />
-    );
-    return (listItems);
+    let r = await helloWorld();
+    console.log("fetchData", r.data);
+    setPlans(plans.concat(plans.length+1));
   }
 
   return (
@@ -64,14 +55,14 @@ export default function Dashboard() {
     <div>
       <p><b>Plans</b></p>
     </div>
-    <div style={{display:"flex", "white-space": "nowrap"}}>
+    <div style={{display:"flex", whiteSpace: "nowrap"}}>
       
-      {plans}
+      {plans.map((x) =>{return <PlannerCard key={x}></PlannerCard>})}
 
       <div style={{"width":"20px"}}/>
       <Card style={{maxWidth:"200px"}}>
         <CardContent>
-          {creatNewPlan()}
+          {createNewPlan()}
         </CardContent>
       </Card>
     </div>
