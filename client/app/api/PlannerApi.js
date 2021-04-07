@@ -4,7 +4,7 @@ const api = axios.create({
     baseURL:"http://localhost:8000"
 })
 
-export async function fetchData() {
-    console.log("fetch");
-    return await resolve(axios.get('/').then(res => res.data));
+export default function helloWorld(setPlanData) {
+    let res = api.get('/');
+    return res;
 }
