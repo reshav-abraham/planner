@@ -19,7 +19,7 @@ import { async } from 'regenerator-runtime';
 // new card button
 
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const [plans, setPlans] = useState([]);
   const [creatingNewPlan, setCreatingNewPlan] = useState(false);
   const [planData, setPlanData] = useState({})
@@ -47,7 +47,27 @@ export default function Dashboard() {
     // send requist to add plan
     let r = await helloWorld();
     console.log("fetchData", r.data);
-    setPlans(plans.concat(plans.length+1));
+    setPlans(plans.concat(plans.length));
+  }
+
+  const removePlan = async (x) => {
+    // send requist to add plan
+    let r = await helloWorld();
+    console.log(plans);
+    console.log("delete data", x, r.data);
+    // setPlans(plans.pop());
+    let tmpPlans = plans;
+    var index = tmpPlans.indexOf(x);
+    if (index > -1) {
+      // tmpPlans.splice(index, 1);
+      // https://stackoverflow.com/questions/55500810/list-of-child-components-not-updating-correctly-when-deleting-object-from-state
+      delete tmpPlans[index]
+   }
+    console.log(index);
+    tmpPlans = tmpPlans.filter(function(a){return typeof a !== 'undefined';});
+    setPlans(tmpPlans);
+    console.log(plans);
+    console.log(tmpPlans);
   }
 
   return (
@@ -57,7 +77,7 @@ export default function Dashboard() {
     </div>
     <div style={{display:"flex", whiteSpace: "nowrap"}}>
       
-      {plans.map((x) =>{return <PlannerCard key={x}></PlannerCard>})}
+      {plans.map((x) =>{ return <> <PlannerCard key={x} plan={x} removePlan={removePlan} ></PlannerCard> <div style={{"width":"20px"}}/></>})}
 
       <div style={{"width":"20px"}}/>
       <Card style={{maxWidth:"200px"}}>

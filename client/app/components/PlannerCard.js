@@ -5,6 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DeleteIcon from '@material-ui/icons/Delete';
+// https://material-ui.com/components/material-icons/
 
 const useStyles = makeStyles({
   root: {
@@ -24,12 +26,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PlannerCard() {
+export default function PlannerCard(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
 function goToPlan(){
-  console.log("Going to plan!");
+  console.log("Going to plan!", props.plan);
+}
+
+function deletePlan(){
+  props.removePlan(props.plan);
 }
 
   return (
@@ -52,6 +58,7 @@ function goToPlan(){
       </CardContent>
       <CardActions>
         <Button onClick={goToPlan} size="small">Learn More</Button>
+        <Button onClick={deletePlan} ><DeleteIcon/></Button>
       </CardActions>
     </Card>
   );
