@@ -5,6 +5,7 @@ import PlannerCard from './PlannerCard';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
+import TextField from '@material-ui/core/TextField';
 
 
 // Card styles
@@ -23,9 +24,12 @@ export default function Dashboard() {
   function creatNewPlan(){
     return (
       creatingNewPlan ? 
-        <div>
-          <Button onClick={()=>{addNewPlan()}}> Save </Button>
-          <Button onClick={()=>{setCreatingNewPlan(false)}}> Cancel </Button>
+        <div style={{}}>
+          <TextField style={{width:"100px"}}/>
+          <div style={{display:"flex", "white-space": "nowrap"}}>
+            <Button onClick={()=>{addNewPlan()}}> Save </Button>
+            <Button onClick={()=>{setCreatingNewPlan(false)}}> Cancel </Button>
+          </div>
         </div> 
         : 
         <div>
@@ -36,7 +40,8 @@ export default function Dashboard() {
   }
 
   function addNewPlan (){
-    setCreatingNewPlan(false);
+    setCreatingNewPlan(false); 
+    // send requist to add plan
     setPlans(
       plans.concat(
           <>
@@ -57,7 +62,7 @@ export default function Dashboard() {
   return (
     <>
     <div>
-      <p><b>Dashboard</b></p>
+      <p><b>Plans</b></p>
     </div>
     <div style={{display:"flex", "white-space": "nowrap"}}>
       
