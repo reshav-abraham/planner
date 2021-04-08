@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 
 // check for existing cards
 
+export const PlannerContext = React.createContext();
 
 function App() {
   return (

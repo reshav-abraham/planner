@@ -42,7 +42,7 @@ function deletePlan(){
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+           {props.plan}
         </Typography>
         <Typography variant="h5" component="h2">
           be{bull}nev{bull}o{bull}lent
@@ -57,7 +57,7 @@ function deletePlan(){
         </Typography>
       </CardContent>
       <CardActions>
-        <Button onClick={goToPlan} size="small">Learn More</Button>
+        <Button onClick={goToPlan} size="small">Go To Plan</Button>
         <Button onClick={deletePlan} ><DeleteIcon/></Button>
       </CardActions>
     </Card>

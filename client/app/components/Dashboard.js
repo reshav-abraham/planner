@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import helloWorld from '../api/PlannerApi';
 import fetchData from '../api/PlannerApi';
 import { async } from 'regenerator-runtime';
+import PlannerContext from '../index.js';
 
 // Card styles
 
@@ -22,16 +23,21 @@ import { async } from 'regenerator-runtime';
 export default function Dashboard(props) {
   const [plans, setPlans] = useState([]);
   const [creatingNewPlan, setCreatingNewPlan] = useState(false);
-  const [planData, setPlanData] = useState({})
+  const [planData, setPlanData] = useState({});
+  const [textFieldValue, setTextFieldValue] = useState("");
+
+  function handleTextFieldChange(e){
+    setTextFieldValue(e.target.value);
+  }
 
   function createNewPlan(){
     return (
       creatingNewPlan ? 
         <div style={{}}>
-          <TextField style={{width:"100px"}}/>
+          <TextField value={textFieldValue} onChange={handleTextFieldChange} style={{width:"100px"}}/>
           <div style={{display:"flex", whiteSpace: "nowrap"}}>
-            <Button onClick={()=>{addNewPlan()}}> Save </Button>
-            <Button onClick={()=>{setCreatingNewPlan(false)}}> Cancel </Button>
+            <Button onClick={()=>{saveNewPlan()}}> Save </Button>
+            <Button onClick={()=>{setCreatingNewPlan(false); setTextFieldValue("");}}> Cancel </Button>
           </div>
         </div> 
         : 
@@ -42,12 +48,14 @@ export default function Dashboard(props) {
     );
   }
 
-  const addNewPlan = async () => {
+  const saveNewPlan = async () => {
     setCreatingNewPlan(false); 
     // send requist to add plan
-    let r = await helloWorld();
-    console.log("fetchData", r.data);
-    setPlans(plans.concat(plans.length));
+    console.log("target", textFieldValue);
+    let r = await helloWorld(textFieldValue);
+    console.log("fetchData", r.data, textFieldValue);
+    setPlans(plans.concat( textFieldValue ));
+    setTextFieldValue("");
   }
 
   const removePlan = async (x) => {
@@ -77,7 +85,7 @@ export default function Dashboard(props) {
     </div>
     <div style={{display:"flex", whiteSpace: "nowrap"}}>
       
-      {plans.map((x) =>{ return <> <PlannerCard key={x} plan={x} removePlan={removePlan} ></PlannerCard> <div style={{"width":"20px"}}/></>})}
+      {plans.map((x) =>{ return <> <PlannerCard key={x} plan={x} removePlan={removePlan} ></PlannerCard> <div key={x+1} style={{"width":"20px"}}/></>})}
 
       <div style={{"width":"20px"}}/>
       <Card style={{maxWidth:"200px"}}>
