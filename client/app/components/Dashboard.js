@@ -33,7 +33,7 @@ export default function Dashboard(props) {
   function createNewPlan(){
     return (
       creatingNewPlan ? 
-        <div style={{}}>
+        <div onKeyDown={keyPress} style={{}}>
           <TextField value={textFieldValue} onChange={handleTextFieldChange} style={{width:"100px"}}/>
           <div style={{display:"flex", whiteSpace: "nowrap"}}>
             <Button onClick={()=>{saveNewPlan()}}> Save </Button>
@@ -46,6 +46,18 @@ export default function Dashboard(props) {
           <Button onClick={()=>{setCreatingNewPlan(true)}}><AddIcon /></Button>
         </div>
     );
+  }
+
+  const keyPress = async (e) => {
+    if (e.key === 'Enter') {
+      setCreatingNewPlan(false); 
+      // send requist to add plan
+      console.log("target", textFieldValue);
+      let r = await helloWorld(textFieldValue);
+      console.log("fetchData", r.data, textFieldValue);
+      setPlans(plans.concat( textFieldValue ));
+      setTextFieldValue("");
+    }
   }
 
   const saveNewPlan = async () => {
