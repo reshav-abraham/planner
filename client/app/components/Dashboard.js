@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../index.css';
 import Button from '@material-ui/core/Button';
 import PlannerCard from './PlannerCard';
@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
-import helloWorld from '../api/PlannerApi';
+import { helloWorld, getPlans, createPlan } from '../api/PlannerApi';
 import fetchData from '../api/PlannerApi';
 import { async } from 'regenerator-runtime';
 
@@ -24,9 +24,18 @@ import { PlannerContext } from './PlannerContext.js'
 export default function Dashboard(props) {
   const [plans, setPlans] = useState([]);
   const [creatingNewPlan, setCreatingNewPlan] = useState(false);
-  const [planData, setPlanData] = useState({});
+  const [planData, setPlanData] = useState([]);
   const [textFieldValue, setTextFieldValue] = useState("");
   const plannerContext = React.useContext(PlannerContext);
+
+  useEffect(()=> {
+    getPlans().then(data => {
+      setPlans(JSON.parse(data))
+    })
+    .catch(err => console.log(err))
+
+    },[])
+
 
   function handleTextFieldChange(e){
     setTextFieldValue(e.target.value);
@@ -67,8 +76,9 @@ export default function Dashboard(props) {
     // send requist to add plan
     console.log("target", textFieldValue);
     let r = await helloWorld(textFieldValue);
+    let r1 = await createPlan(textFieldValue);
     console.log("fetchData", r.data, textFieldValue);
-    setPlans(plans.concat( textFieldValue ));
+    // setPlans(plans.concat( textFieldValue ));
     setTextFieldValue("");
   }
 
@@ -97,9 +107,9 @@ export default function Dashboard(props) {
     <div>
       <p><b>Plans</b> {plannerContext.planId} </p>
     </div>
+
     <div style={{display:"flex", whiteSpace: "nowrap"}}>
-      
-      {plans.map((x) =>{ return <> <PlannerCard key={x} plan={x} removePlan={removePlan} ></PlannerCard> <div key={x+1} style={{"width":"20px"}}/></>})}
+    {plans.map((x) => { return <> <PlannerCard key={x.planId} plan={x.planId} removePlan={removePlan} ></PlannerCard> <div key={x.planId} style={{"width":"20px"}}/></>})}
 
       <div style={{"width":"20px"}}/>
       <Card style={{maxWidth:"200px"}}>

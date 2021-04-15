@@ -12,7 +12,7 @@ import { PlannerContext } from './components/PlannerContext.js'
 
 function App() {
   const plannerContext = React.useContext(PlannerContext);
-  console.log("plan", plannerContext);
+
   return (
       plannerContext.plannerView === "dashboard" ?
       <Dashboard />
