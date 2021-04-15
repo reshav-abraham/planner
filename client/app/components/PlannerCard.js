@@ -42,8 +42,6 @@ function goToPlan(){
   console.log("plannerContext", plannerContext);
 }
 
-console.log("plannerContext", plannerContext);
-
 function deletePlan(){
   props.removePlan(props.plan);
 }
