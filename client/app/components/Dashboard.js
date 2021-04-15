@@ -6,7 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
-import { helloWorld, getPlans, createPlan } from '../api/PlannerApi';
+import { helloWorld, getPlans, createPlan, deletePlan } from '../api/PlannerApi';
 import fetchData from '../api/PlannerApi';
 import { async } from 'regenerator-runtime';
 
@@ -61,13 +61,7 @@ export default function Dashboard(props) {
 
   const keyPress = async (e) => {
     if (e.key === 'Enter') {
-      setCreatingNewPlan(false); 
-      // send requist to add plan
-      console.log("target", textFieldValue);
-      let r = await helloWorld(textFieldValue);
-      console.log("fetchData", r.data, textFieldValue);
-      setPlans(plans.concat( textFieldValue ));
-      setTextFieldValue("");
+      saveNewPlan();
     }
   }
 
@@ -75,31 +69,32 @@ export default function Dashboard(props) {
     setCreatingNewPlan(false); 
     // send requist to add plan
     console.log("target", textFieldValue);
-    let r = await helloWorld(textFieldValue);
     let r1 = await createPlan(textFieldValue);
-    console.log("fetchData", r.data, textFieldValue);
+    console.log("fetchData", textFieldValue);
     // setPlans(plans.concat( textFieldValue ));
     setTextFieldValue("");
+
+    getPlans().then(data => {
+      setPlans(JSON.parse(data))
+    })
+    .catch(err => console.log(err))
   }
 
-  const removePlan = async (x) => {
+  const removePlanT = async (planId) => {
     // send requist to add plan
-    let r = await helloWorld();
     console.log(plans);
-    console.log("delete data", x, r.data);
+    console.log("delete data", planId);
     // setPlans(plans.pop());
-    let tmpPlans = plans;
-    var index = tmpPlans.indexOf(x);
-    if (index > -1) {
-      // tmpPlans.splice(index, 1);
-      // https://stackoverflow.com/questions/55500810/list-of-child-components-not-updating-correctly-when-deleting-object-from-state
-      delete tmpPlans[index]
-   }
-    console.log(index);
-    tmpPlans = tmpPlans.filter(function(a){return typeof a !== 'undefined';});
-    setPlans(tmpPlans);
+    deletePlan(planId);
     console.log(plans);
-    console.log(tmpPlans);
+
+    getPlans().then(data => {
+      setPlans(JSON.parse(data))
+    })
+    .catch(err => console.log(err))
+
+    console.log(plans);
+
   }
 
   return (
@@ -109,7 +104,7 @@ export default function Dashboard(props) {
     </div>
 
     <div style={{display:"flex", whiteSpace: "nowrap"}}>
-    {plans.map((x) => { return <> <PlannerCard key={x.planId} plan={x.planId} removePlan={removePlan} ></PlannerCard> <div key={x.planId} style={{"width":"20px"}}/></>})}
+    {plans.map((x) => { return <> <PlannerCard key={x.planId} planId={x.planId} removePlanT={removePlanT} ></PlannerCard> <div key={x.planId} style={{"width":"20px"}}/></>})}
 
       <div style={{"width":"20px"}}/>
       <Card style={{maxWidth:"200px"}}>

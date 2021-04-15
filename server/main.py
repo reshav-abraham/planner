@@ -50,3 +50,15 @@ async def create_plan(request: Dict[Any, Any]):
     collection = db['plans']
     collection.insert_one({'planId': planId}) 
     return {'status': 200, 'msg': f'plan {planId} created'}
+
+@app.put("/deletePlan")
+async def delete_plan(request: Dict[Any, Any]):
+
+    if 'planId' in request:
+        planId = request['planId']
+    else:
+        raise ValueError("500, please pass json with 'plan'")
+        return {'status': 500}
+    collection = db['plans']
+    collection.delete_one({'planId': planId}) 
+    return {'status': 200, 'msg': f'plan {planId} deleted'}

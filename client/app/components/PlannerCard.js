@@ -35,22 +35,22 @@ export default function PlannerCard(props) {
   const bull = <span className={classes.bullet}>•</span>;
 
 function goToPlan(){
-  console.log("Going to plan!", props.plan);
+  console.log("Going to plan!", props.planId);
   console.log("plannerContext", plannerContext);
   plannerContext.setPlannerView('plan');
-  plannerContext.setPlanId(props.plan);
+  plannerContext.setPlanId(props.planId);
   console.log("plannerContext", plannerContext);
 }
 
 function deletePlan(){
-  props.removePlan(props.plan);
+  props.removePlanT(props.planId);
 }
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-           {props.plan}
+           {props.planId}
         </Typography>
         <Typography variant="h5" component="h2">
           be{bull}nev{bull}o{bull}lent

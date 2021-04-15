@@ -20,3 +20,10 @@ export function createPlan(planId) {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }
+
+export function deletePlan(planId) {
+    let promise = api.put('/deletePlan', {'planId': planId});
+    console.log("removing plan", planId);
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise;
+}
