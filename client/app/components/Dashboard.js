@@ -9,7 +9,6 @@ import TextField from '@material-ui/core/TextField';
 import helloWorld from '../api/PlannerApi';
 import fetchData from '../api/PlannerApi';
 import { async } from 'regenerator-runtime';
-import PlannerContext from '../index.js';
 
 // Card styles
 

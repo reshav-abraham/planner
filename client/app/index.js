@@ -4,6 +4,7 @@ import './index.css';
 import '@babel/polyfill'
 import Button from '@material-ui/core/Button';
 import Dashboard from './components/Dashboard';
+import PlannerProvider from './components/PlannerContext';
 
 // check for existing cards
 
@@ -11,9 +12,9 @@ export const PlannerContext = React.createContext();
 
 function App() {
   return (
-    <>
+    <PlannerProvider>
     <Dashboard />
-    </>
+    </PlannerProvider>
   );
 }
 
