@@ -1,18 +1,18 @@
 import React from 'react';
 
-export const PlannerContext = React.createContext({'selectedPlan':''});
+export const PlannerContext = React.createContext();
 
 export default ({ children }) => {
-    const teamMembersNames = ['John', 'Mary', 'Jason', 'David']
+    const plannerViews = ['dashboard', 'plan'];
   
-    const [sharing, setSharing] = React.useState([])
-    const [help, setHelp] = React.useState([])
-    const [pairing, setPairing] = React.useState(teamMembersNames)
-  
+    const [planId, setPlanId] = React.useState([]); // keep state of the selected plan
+    const [plannerView, setPlannerView] = React.useState('dashboard');
+
     const store = {
-      sharing: [sharing, setSharing],
-      help: [help, setHelp],
-      pairing: [pairing, setPairing],
+        planId: planId,
+        plannerView: plannerView,
+        setPlannerView: (view) => setPlannerView(view),
+        setPlanId: (id) => setPlanId(id),
     }
   
     return <PlannerContext.Provider value={store}>{children}</PlannerContext.Provider>

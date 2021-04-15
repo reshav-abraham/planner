@@ -31,12 +31,18 @@ const useStyles = makeStyles({
 export default function PlannerCard(props) {
   const classes = useStyles();
   const plannerContext = React.useContext(PlannerContext);
+
   const bull = <span className={classes.bullet}>•</span>;
 
 function goToPlan(){
   console.log("Going to plan!", props.plan);
   console.log("plannerContext", plannerContext);
+  plannerContext.setPlannerView('plan');
+  plannerContext.setPlanId(props.plan);
+  console.log("plannerContext", plannerContext);
 }
+
+console.log("plannerContext", plannerContext);
 
 function deletePlan(){
   props.removePlan(props.plan);

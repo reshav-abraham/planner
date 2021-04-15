@@ -10,6 +10,8 @@ import helloWorld from '../api/PlannerApi';
 import fetchData from '../api/PlannerApi';
 import { async } from 'regenerator-runtime';
 
+import { PlannerContext } from './PlannerContext.js'
+
 // Card styles
 
 
@@ -24,6 +26,7 @@ export default function Dashboard(props) {
   const [creatingNewPlan, setCreatingNewPlan] = useState(false);
   const [planData, setPlanData] = useState({});
   const [textFieldValue, setTextFieldValue] = useState("");
+  const plannerContext = React.useContext(PlannerContext);
 
   function handleTextFieldChange(e){
     setTextFieldValue(e.target.value);
@@ -92,7 +95,7 @@ export default function Dashboard(props) {
   return (
     <>
     <div>
-      <p><b>Plans</b></p>
+      <p><b>Plans</b> {plannerContext.planId} </p>
     </div>
     <div style={{display:"flex", whiteSpace: "nowrap"}}>
       
