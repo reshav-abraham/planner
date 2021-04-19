@@ -62,6 +62,10 @@ export default function TaskModal(props) {
     props.closeTaskModal();
   };
 
+  const handleSave = () => {
+    props.closeTaskModal();
+  };
+
   const initialColumns = {
     todo: {
       id: "todo",
@@ -91,7 +95,10 @@ export default function TaskModal(props) {
       <p id="simple-modal-description">
         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
       </p>
+      <div>
       <Button onClick={handleClose}>Close</Button>
+      <Button onClick={handleSave}>Save</Button> 
+      </div>
     </div>
   );
 
