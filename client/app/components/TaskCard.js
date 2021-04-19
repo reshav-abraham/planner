@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PlannerCard(props) {
+export default function TaskCard(props) {
   const classes = useStyles();
   const plannerContext = React.useContext(PlannerContext);
 
