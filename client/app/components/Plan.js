@@ -7,7 +7,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TaskCard from './TaskCard';
+import TaskModal from './TaskModal';
 import { DragDropContext } from "react-beautiful-dnd";
+import Modal from '@material-ui/core/Modal';
 import Column from "./Column";
 // https://material-ui.com/components/material-icons/
 // https://codesandbox.io/s/react-material-ui-drag-and-drop-trello-clone-2-lists-7q46h?file=/src/App.js:664-1080
@@ -45,6 +47,7 @@ export default function Plan(props) {
   const classes = useStyles();
   const plannerContext = useContext(PlannerContext);
   const [tasks, setTasks] = useState([1,1,1,1,1,1,1,1]);
+  const [taskModalVisible, setTaskModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
   const initialColumns = {
     todo: {
@@ -65,7 +68,7 @@ export default function Plan(props) {
     },
     done: {
       id: "done",
-      list: []
+      list: [{ id: "4", text: "text7" }]
     }
   };
   const [columns, setColumns] = useState(initialColumns);
@@ -73,6 +76,17 @@ export default function Plan(props) {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+
+  function createNewTaskModel(){
+   console.log("create new task model");
+   setTaskModalVisible(true);
+   console.log("taskModalVisible", taskModalVisible);
+  }
+
+  function closeTaskModal(){
+    console.log("close task modal");
+    setTaskModalVisible(false);
+  }
 
 
   return (
@@ -121,6 +135,10 @@ export default function Plan(props) {
         </Grid>
       </MuiPickersUtilsProvider>
       <div>TASKS</div>
+
+      <Button style={{color:"green"}} onClick={createNewTaskModel}> Create new task </Button>
+      
+      <TaskModal visible={taskModalVisible} closeTaskModal={closeTaskModal}/>
 
       <DragDropContext > 
       <Grid container direction={"row"} justify={"center"}>
