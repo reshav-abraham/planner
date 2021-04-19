@@ -7,7 +7,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TaskCard from './TaskCard';
+import { DragDropContext } from "react-beautiful-dnd";
+import Column from "./Column";
 // https://material-ui.com/components/material-icons/
+// https://codesandbox.io/s/react-material-ui-drag-and-drop-trello-clone-2-lists-7q46h?file=/src/App.js:664-1080
 import 'date-fns';
 
 import Grid from '@material-ui/core/Grid';
@@ -43,6 +46,29 @@ export default function Plan(props) {
   const plannerContext = useContext(PlannerContext);
   const [tasks, setTasks] = useState([1,1,1,1,1,1,1,1]);
   const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+  const initialColumns = {
+    todo: {
+      id: "todo",
+      list: [
+        { id: "1", text: "text1" },
+        { id: "2", text: "text2" },
+        { id: "3", text: "text3" }
+      ]
+    },
+    doing: {
+      id: "doing",
+      list: [
+        { id: "4", text: "text4" },
+        { id: "5", text: "text5" },
+        { id: "6", text: "text6" }
+      ]
+    },
+    done: {
+      id: "done",
+      list: []
+    }
+  };
+  const [columns, setColumns] = useState(initialColumns);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -105,6 +131,19 @@ export default function Plan(props) {
           </CardContent>
         </Card>
       </div>
+
+      <DragDropContext > 
+      <Grid container direction={"row"} justify={"center"}>
+        {Object.values(columns).map((column) => {
+          console.log(column);
+          return (
+            <Grid item>
+              <Column column={column} key={column.id} />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </DragDropContext>
     </>
   );
 }
