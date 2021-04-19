@@ -5,6 +5,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Draggable } from "react-beautiful-dnd";
+import TaskCard from './TaskCard';
 
 const ListItemCustom = ({ itemObject, index }) => {
   return (
@@ -20,10 +21,11 @@ const ListItemCustom = ({ itemObject, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <ListItemText
+          {/* <ListItemText
             sytles={{ fontFamily: "Quicksand" }}
-            primary={`${itemObject.text}`}
-          />
+            primary={`${itemObject.text}` + "123"}
+          /> */}
+          <TaskCard key={`${itemObject.text}`} planId={`${itemObject.text}`} />
           <ListItemSecondaryAction>
             <IconButton
               edge="end"

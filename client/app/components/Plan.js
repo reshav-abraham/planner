@@ -121,16 +121,6 @@ export default function Plan(props) {
         </Grid>
       </MuiPickersUtilsProvider>
       <div>TASKS</div>
-      <div style={{display:"flex", whiteSpace: "nowrap", flexDirection: "column"}}>
-      {tasks.map((x) => { return <> <TaskCard key={x.planId} planId={x.planId} ></TaskCard> <div key={x.planId} style={{"width":"20px"}}/></>})}
-
-        <div style={{"width":"20px"}}/>
-        <Card style={{maxWidth:"200px"}}>
-          <CardContent>
-            {/* {createNewPlan()} */}
-          </CardContent>
-        </Card>
-      </div>
 
       <DragDropContext > 
       <Grid container direction={"row"} justify={"center"}>
