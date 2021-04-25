@@ -4,3 +4,5 @@ client/yarn-error.log
 server/__pycache__
 data/db
 cfg.txt
+server/node-server/node_modules
+server/python-server/__pycache__
