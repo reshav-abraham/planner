@@ -46,6 +46,18 @@ app.get('/plans', async (req, res, next) => {
   }
 });
 
+app.delete('/plans', async (req, res, next) => {
+  try {
+    let planId = req.query.planId;
+    console.log("data", req.query);
+    db.deletePlan(planId);
+    res.sendStatus(200);
+  } catch(e){
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 });

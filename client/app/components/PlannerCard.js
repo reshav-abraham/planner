@@ -41,7 +41,7 @@ function goToPlan(){
 }
 
 function deletePlan(){
-  props.removePlanT(props.planId);
+  props.removePlan(props.planId);
 }
 
   return (

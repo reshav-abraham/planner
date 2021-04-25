@@ -55,4 +55,15 @@ plannerdb.retrievePlans = (User) => {
 
 };
 
+plannerdb.deletePlan = (plan) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`DELETE FROM planner.Plans WHERE planId = "${plan}";`, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 module.exports = plannerdb;

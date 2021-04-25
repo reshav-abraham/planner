@@ -80,14 +80,14 @@ export default function Dashboard(props) {
     .catch(err => console.log(err))
   }
 
-  const removePlanT = async (planId) => {
+  const removePlan = async (planId) => {
     // send requist to add plan
     console.log(plans);
     console.log("delete data", planId);
     // setPlans(plans.pop());
     deletePlan(planId);
     console.log(plans);
-
+    // make sure to remove from list
     getPlans().then(data => {
       setPlans(JSON.parse(data))
     })
@@ -105,7 +105,7 @@ export default function Dashboard(props) {
 
     <div style={{display:"flex", whiteSpace: "nowrap"}}>
     {plans.map((x) => { return <div key={x.planId} style={{"width":"200px", height:"150px", paddingRight: "20px"}} > 
-                                <PlannerCard key={x.planId} planId={x.planId} removePlanT={removePlanT} ></PlannerCard> 
+                                <PlannerCard key={x.planId} planId={x.planId} removePlan={removePlan} ></PlannerCard> 
                                 </div>
                       })}
 
