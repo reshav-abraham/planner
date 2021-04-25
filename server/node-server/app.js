@@ -39,7 +39,6 @@ app.post('/createPlan', async (req, res, next) => {
 app.get('/plans', async (req, res, next) => {
   try {
     let plans = await db.retrievePlans("");
-    console.log("PLANS!", plans);
     res.json(JSON.stringify(plans));
   } catch(e){
     console.log(e);
