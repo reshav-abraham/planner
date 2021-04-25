@@ -45,7 +45,7 @@ function deletePlan(){
 }
 
   return (
-    <Card className={classes.root}>
+    <Card key={props.planId+"_card"} className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
            {props.planId}

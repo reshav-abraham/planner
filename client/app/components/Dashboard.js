@@ -104,10 +104,13 @@ export default function Dashboard(props) {
     </div>
 
     <div style={{display:"flex", whiteSpace: "nowrap"}}>
-    {plans.map((x) => { return <> <PlannerCard key={x.planId} planId={x.planId} removePlanT={removePlanT} ></PlannerCard> <div key={x.planId} style={{"width":"20px"}}/></>})}
+    {plans.map((x) => { return <div key={x.planId} style={{"width":"200px", height:"150px", paddingRight: "20px"}} > 
+                                <PlannerCard key={x.planId} planId={x.planId} removePlanT={removePlanT} ></PlannerCard> 
+                                </div>
+                      })}
 
       <div style={{"width":"20px"}}/>
-      <Card style={{maxWidth:"200px"}}>
+      <Card style={{maxWidth:"200px", height:"110px"}}>
         <CardContent>
           {createNewPlan()}
         </CardContent>

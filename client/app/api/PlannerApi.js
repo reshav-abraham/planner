@@ -16,9 +16,14 @@ export function getPlans(setPlanData) {
 }
 
 export function createPlan(planId) {
-    let promise = api.post('/createPlan', {'planId': planId});
-    const dataPromise = promise.then((response) => response.data)
-    return dataPromise;
+    if (planId){
+        let promise = api.post('/createPlan', {'planId': planId});
+        const dataPromise = promise.then((response) => response.data);
+        return dataPromise;
+    } else {
+        console.log("plan id must not be empty string");
+        return ""
+    }
 }
 
 export function deletePlan(planId) {
