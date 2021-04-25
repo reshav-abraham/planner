@@ -83,8 +83,8 @@ export default function Plan(props) {
    console.log("taskModalVisible", taskModalVisible);
   }
 
-  function closeTaskModal(){
-    console.log("close task modal");
+  function closeTaskModal(op){
+    console.log("close task modal", op);
     setTaskModalVisible(false);
   }
 
