@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL:"http://localhost:8000"
-})
+});
 
 export function helloWorld(setPlanData) {
     let res = api.get('/');
@@ -16,7 +16,7 @@ export function getPlans(setPlanData) {
 }
 
 export function createPlan(planId) {
-    let promise = api.put('/createPlan', {'planId': planId});
+    let promise = api.post('/createPlan', {'planId': planId});
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }

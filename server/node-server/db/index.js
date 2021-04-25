@@ -4,17 +4,17 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     password: "password",
     user: "root",
-    database: "sitepoint",
+    database: "planner",
     host: "localhost",
     port: "3306",
 });
 
-let sitepointdb = {};
+let plannerdb = {};
 
-sitepointdb.all = () => {
+plannerdb.all = () => {
 
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT * from sitepoint.authors;`, (err, results) => {
+        pool.query(`SELECT * from planner.Plans;`, (err, results) => {
             if(err) {
                 return reject(err);
             }
@@ -24,4 +24,35 @@ sitepointdb.all = () => {
 
 };
 
-module.exports = sitepointdb;
+plannerdb.createNewPlan = (planName) => {
+
+    return new Promise((resolve, reject) => {
+        // console.log(planData);
+        // check if entry exists;
+        pool.query(`INSERT INTO Plans (planId) VALUES ('${planName}');`, (err, results) => {
+            if(err) {
+                console.log("Plan already exists!");
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+
+};
+
+plannerdb.retrievePlans = (User) => {
+
+    return new Promise((resolve, reject) => {
+        // console.log(planData);
+        // check if entry exists;
+        pool.query(`SELECT * from planner.Plans;`, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+
+};
+
+module.exports = plannerdb;
