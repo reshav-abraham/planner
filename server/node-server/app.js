@@ -2,6 +2,8 @@ const express = require('express');
 var cors = require('cors');
 const db = require('./db');
 const app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({ type: ["application/json", "application/csp-report"] }));
 app.use(cors());
 app.set('port', process.env.PORT || 3000);
 const port = 8000;
@@ -28,17 +30,22 @@ app.post('/createUser', async (req, res, next) => {
 });
 
 app.post('/createPlan', async (req, res, next) => {
-  console.log('create User');
+  console.log('create User', req.body);
+  let planId = req.body.planId;
+  db.createNewPlan(planId);
   res.json({"message":"success"});
-  // try {
-  //   let results = await db.all();
-  //   res.json(results);
-  // } catch(e){
-  //   console.log(e);
-  //   res.sendStatus(500);
-  // }
 });
 
+app.get('/plans', async (req, res, next) => {
+  try {
+    let plans = await db.retrievePlans("");
+    console.log("PLANS!", plans);
+    res.json(JSON.stringify(plans));
+  } catch(e){
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
