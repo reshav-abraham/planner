@@ -25,7 +25,7 @@ const ListItemCustom = ({ itemObject, index }) => {
             sytles={{ fontFamily: "Quicksand" }}
             primary={`${itemObject.text}` + "123"}
           /> */}
-          <TaskCard key={itemObject.text} subTask={itemObject.subTask} planId={itemObject.text} />
+          <TaskCard key={itemObject.text} subTask={itemObject.subTask} taskId={itemObject.text} />
           <ListItemSecondaryAction>
             <IconButton
               edge="end"

@@ -3,10 +3,10 @@ var cors = require('cors');
 const db = require('./db');
 const app = express();
 var bodyParser = require('body-parser');
-// app.use(bodyParser.json({ type: ["application/json", "application/csp-report"] }));
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use(bodyParser.json({ type: ["application/json", "application/csp-report"] }));
+// app.use(bodyParser.urlencoded({
+//   extended: true
+// }));
 app.use(cors());
 app.set('port', process.env.PORT || 3000);
 const port = 8000;

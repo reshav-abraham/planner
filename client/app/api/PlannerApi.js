@@ -45,3 +45,10 @@ export function createTask(planId, task, subTasks) {
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }
+
+export function updateSubTask(planId, taskId, subTaskId, state) {
+    let promise = api.put('/updateSubTask', {"planId": planId, "taskId": taskId, "subTaskId": subTaskId, "state": state});
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise;
+}
+

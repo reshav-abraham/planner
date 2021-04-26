@@ -9,7 +9,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
 // https://material-ui.com/components/material-icons/
 
-import { PlannerContext } from './PlannerContext.js'
+import { PlannerContext } from './PlannerContext.js';
+import { updateSubTask } from '../api/PlannerApi';
 
 const useStyles = makeStyles({
   root: {
@@ -33,22 +34,12 @@ export default function TaskCard(props) {
   const classes = useStyles();
   const plannerContext = React.useContext(PlannerContext);
 
-function goToPlan(){
-  console.log("Going to plan!", props.planId);
-  console.log("plannerContext", plannerContext);
-  plannerContext.setPlannerView('plan');
-  plannerContext.setPlanId(props.planId);
-  console.log("plannerContext", plannerContext);
-}
-
-function deletePlan(){
-  props.removePlanT(props.planId);
-}
-
 function handleCheckBox(event, x){
     if (event){
       console.log("event.target.checked", event.target.checked, x);
       // update state in db
+      console.log("props", props.taskId);
+      updateSubTask(plannerContext.planId, props.taskId, x, event.target.checked ? 'done' : 'todo');
     }
 }
 
@@ -56,12 +47,12 @@ return (
     <Card style={{"width":"170px"}} className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-           {props.planId}
+           {props.taskId}
         </Typography>
       </CardContent>
       {props.subTask ? props.subTask.map((x) => { return <div key={x+"_div"}><Checkbox key={x+"_check"} onChange={(e)=>{handleCheckBox(e,x)}}></Checkbox><ul key={x}> {x} </ul> </div> }) : ''}
       <CardActions>
-        <Button onClick={deletePlan} ><DeleteIcon/></Button>
+        <Button onClick={()=>{console.log("Delete task", props.taskId)}} ><DeleteIcon/></Button>
       </CardActions>
     </Card>
   );
