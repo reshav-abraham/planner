@@ -62,7 +62,7 @@ app.get('/tasks', async (req, res, next) => {
   try {
     let planId = req.query.planId;
     console.log("data", req.query);
-    let tasks = await db.getTasks(planId);
+    let tasks = await db.getAllTasksFromPlan(planId);
     res.json(tasks);
   } catch(e){
     console.log(e);

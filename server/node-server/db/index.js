@@ -66,9 +66,29 @@ plannerdb.deletePlan = (planId) => {
     });
 };
 
-plannerdb.getTasks = (planId) => {
+plannerdb.getAllTasksFromPlan = (planId) => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT * from planner.Tasks WHERE planId = "${planId}";`, (err, results) => {
+        pool.query(`SELECT Tasks.state as taskState, subTaskId, SubTasks.state as subTaskState, Tasks.taskId FROM planner.SubTasks
+        INNER JOIN Tasks 
+            ON Tasks.taskId=SubTasks.taskId
+        INNER JOIN Plans 
+            ON Tasks.planId=Plans.planId
+            WHERE Plans.planId="${planId}";`, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+plannerdb.getSubTasksFromTask = (taskId) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT * FROM planner.SubTasks
+                    INNER JOIN Tasks 
+                        ON Tasks.taskId=SubTasks.taskId
+                        WHERE Tasks.taskId="${taskId}";`, 
+                        (err, results) => {
             if(err) {
                 return reject(err);
             }

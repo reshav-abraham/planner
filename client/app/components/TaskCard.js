@@ -39,20 +39,19 @@ function goToPlan(){
   plannerContext.setPlanId(props.planId);
   console.log("plannerContext", plannerContext);
 }
-console.log(props.subTask);
 
 function deletePlan(){
   props.removePlanT(props.planId);
 }
 
-  return (
+return (
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
            {props.planId}
         </Typography>
       </CardContent>
-      {props.subTask.map((x) => { return <div><ul key={x}> {x} </ul> </div> })}
+      {props.subTask ? props.subTask.map((x) => { return <div key={x}><ul key={x}> {x} </ul> </div> }) : ''}
       <CardActions>
         <Button onClick={goToPlan} size="small">Go To Plan</Button>
         <Button onClick={deletePlan} ><DeleteIcon/></Button>

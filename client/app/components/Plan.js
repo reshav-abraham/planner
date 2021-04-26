@@ -56,15 +56,42 @@ export default function Plan(props) {
       list: []
     }
   };
+
   const [columns, setColumns] = useState(initialColumns);
 
   useEffect(()=> {
     getTasks(plannerContext.planId).then(data => {
-      console.log(data);
+      console.log("api call");
       setTasks(data);
-      // setColumns(JSON.parse(data))
+      let newColumns = {...columns};
+      // iterate through tasks and update columns
+      data.forEach( element => {
+          if(element.taskState == "todo"){
+            // if task in list append subtasks
+            let index = newColumns.todo.list.findIndex(x => x.id ===element.taskId);
+            console.log("found index", index);
+            if(index >= 0){
+              newColumns.todo.list[index].subTask.push(element.subTaskId);
+            }else{
+              newColumns.todo.list.push({ id: element.taskId, text: element.taskId, subTask: [element.subTaskId] });
+            }
+
+          } else if (element.taskState == "doing"){
+             // if task in list append subtasks
+            newColumns.doing.list.push({ id: element.taskId, text: element.taskId, subTask: [element.subTaskId] });
+
+          } else {
+             // if task in list append subtasks
+            newColumns.done.list.push({ id: element.taskId, text: element.taskId, subTask: [element.subTaskId] });
+
+          }
+        }          
+      ); 
+    // console.log("new columns!", newColumns.todo.list);
+    // console.log("new columns!",initialColumns2.todo.list);
+    setColumns(newColumns);     
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 
     },[])
 
@@ -80,13 +107,14 @@ export default function Plan(props) {
 
   function closeTaskModal(op, data){
     console.log("close task modal", op, data);
-    let newColumns = columns;
-    console.log(data);
-    newColumns.todo.list.push({ id: data.task, text: data.task, subTask: data.subTask });
-    setColumns(newColumns);
+    if(op=="save"){
+      let newColumns = columns;
+      // console.log(data);
+      newColumns.todo.list.push({ id: data.task, text: data.task, subTask: data.subTask });
+      setColumns(newColumns);
+      // update db
+    }
     setTaskModalVisible(false);
-    // update db
-    
   }
 
 
@@ -144,7 +172,6 @@ export default function Plan(props) {
       <DragDropContext > 
       <Grid container direction={"row"} justify={"center"}>
         {Object.values(columns).map((column) => {
-          console.log(column);
           return (
             <Grid item>
               <Column column={column} key={column.id} />
