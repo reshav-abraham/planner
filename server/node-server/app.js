@@ -70,6 +70,25 @@ app.get('/tasks', async (req, res, next) => {
   }
 });
 
+app.put('/createTask', async (req, res, next) => {
+  console.log("createTask!");
+  try {
+    let planId = req.query.planId;
+    let taskId = req.body.task;
+    let subTasks = req.body.subTasks;
+
+    db.createNewTask(planId, taskId)
+    subTasks.forEach(subTask => {
+      // db dump
+      db.createNewSubTask(planId, taskId, subTask)
+    });
+    res.json({"message":"success"});
+  } catch(e){
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 });
