@@ -47,7 +47,7 @@ export default function TaskModal(props) {
   const [modalStyle] = React.useState(getModalStyle);
 
   const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    setChipData((chips) => chips.filter((chip) => chip !== chipToDelete));
   };
   
   const handleClose = () => {
@@ -55,7 +55,7 @@ export default function TaskModal(props) {
   };
 
   const handleSave = () => {
-    props.closeTaskModal('save', {"task":textFieldValue, "chipData": chipData});
+    props.closeTaskModal('save', {"task":textFieldValue, "subTask": chipData});
   };
 
   function handleTextFieldChange(e){
@@ -69,7 +69,7 @@ export default function TaskModal(props) {
   function addSubTask(subTask){
     // let newChipData = chipData;
     // newChipData.push({key: chipData.length+1, label: subTask});
-    setChipData(oldArray => [...oldArray, {key: chipData.length+1, label: subTask}]);
+    setChipData(oldArray => [...oldArray, subTask]);
     console.log(chipData);
   }
 
@@ -92,15 +92,11 @@ export default function TaskModal(props) {
       {chipData.map((data) => {
         let icon;
 
-        if (data.label === 'React') {
-          icon = <TagFacesIcon />;
-        }
-
         return (
-          <li key={data.key}>
+          <li key={data}>
             <Chip
               icon={icon}
-              label={data.label}
+              label={data}
               onDelete={handleDelete(data)}
               className={classes.chip}
             />
