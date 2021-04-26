@@ -53,22 +53,22 @@ export default function Plan(props) {
     todo: {
       id: "todo",
       list: [
-        { id: "1", text: "text1" },
-        { id: "2", text: "text2" },
-        { id: "3", text: "text3" }
+        { id: "1", text: "text1", subTask: ["test", "new"] },
+        { id: "2", text: "text2", subTask: [] },
+        { id: "3", text: "text3", subTask: [] }
       ]
     },
     doing: {
       id: "doing",
       list: [
-        { id: "4", text: "text4" },
-        { id: "5", text: "text5" },
-        { id: "6", text: "text6" }
+        { id: "4", text: "text4", subTask: [] },
+        { id: "5", text: "text5", subTask: [] },
+        { id: "6", text: "text6", subTask: [] }
       ]
     },
     done: {
       id: "done",
-      list: [{ id: "4", text: "text7" }]
+      list: [{ id: "4", text: "text7", subTask: [] }]
     }
   };
   const [columns, setColumns] = useState(initialColumns);
@@ -83,8 +83,11 @@ export default function Plan(props) {
    console.log("taskModalVisible", taskModalVisible);
   }
 
-  function closeTaskModal(op){
-    console.log("close task modal", op);
+  function closeTaskModal(op, data){
+    console.log("close task modal", op, data);
+    let newColumns = columns;
+    k.todo.list.push({ id: "", text: "text44" });
+    setColumns(k);
     setTaskModalVisible(false);
   }
 
