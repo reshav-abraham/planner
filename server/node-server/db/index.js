@@ -97,5 +97,32 @@ plannerdb.getSubTasksFromTask = (taskId) => {
     });
 };
 
+//-- INSERT INTO Tasks (planId, taskId, state) VALUES
+//-- ('masters', 'nyu', 'todo');
+plannerdb.createNewTask = (planId, taskId) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`INSERT INTO Tasks (planId, taskId, state) VALUES
+                    ('${planId}','${taskId}','todo')`, 
+                        (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+plannerdb.createNewSubTask = (planId, taskId, subTaskId) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`INSERT INTO SubTasks (planId, taskId, subTaskId, state) VALUES
+                    ('${planId}','${taskId}', '${subTaskId}','todo')`, 
+                        (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
 
 module.exports = plannerdb;

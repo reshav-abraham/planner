@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TaskModal from './TaskModal';
 import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
-import { getTasks } from '../api/PlannerApi';
+import { getTasks, createTask } from '../api/PlannerApi';
 // https://material-ui.com/components/material-icons/
 // https://codesandbox.io/s/react-material-ui-drag-and-drop-trello-clone-2-lists-7q46h?file=/src/App.js:664-1080
 import 'date-fns';
@@ -110,9 +110,12 @@ export default function Plan(props) {
     if(op=="save"){
       let newColumns = columns;
       // console.log(data);
+      createTask(plannerContext.planId, data.task, data.subTask);
       newColumns.todo.list.push({ id: data.task, text: data.task, subTask: data.subTask });
       setColumns(newColumns);
+      
       // update db
+
     }
     setTaskModalVisible(false);
   }

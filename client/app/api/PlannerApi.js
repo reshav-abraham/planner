@@ -35,7 +35,13 @@ export function deletePlan(planId) {
 
 //TASK API CALLS
 export function getTasks(planId) {
-    let promise = api.get('/tasks?planId='+planId, {'planId': planId});
+    let promise = api.get('/tasks?planId='+planId);
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise;
+}
+
+export function createTask(planId, task, subTasks) {
+    let promise = api.put('/createTask?planId='+planId, {'task': task, 'subTasks':subTasks});
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }
