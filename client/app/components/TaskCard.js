@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Checkbox from '@material-ui/core/Checkbox';
 // https://material-ui.com/components/material-icons/
 
 import { PlannerContext } from './PlannerContext.js'
@@ -44,16 +45,22 @@ function deletePlan(){
   props.removePlanT(props.planId);
 }
 
+function handleCheckBox(event, x){
+    if (event){
+      console.log("event.target.checked", event.target.checked, x);
+      // update state in db
+    }
+}
+
 return (
-    <Card className={classes.root}>
+    <Card style={{"width":"170px"}} className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
            {props.planId}
         </Typography>
       </CardContent>
-      {props.subTask ? props.subTask.map((x) => { return <div key={x}><ul key={x}> {x} </ul> </div> }) : ''}
+      {props.subTask ? props.subTask.map((x) => { return <div key={x+"_div"}><Checkbox key={x+"_check"} onChange={(e)=>{handleCheckBox(e,x)}}></Checkbox><ul key={x}> {x} </ul> </div> }) : ''}
       <CardActions>
-        <Button onClick={goToPlan} size="small">Go To Plan</Button>
         <Button onClick={deletePlan} ><DeleteIcon/></Button>
       </CardActions>
     </Card>
