@@ -3,7 +3,10 @@ var cors = require('cors');
 const db = require('./db');
 const app = express();
 var bodyParser = require('body-parser');
-app.use(bodyParser.json({ type: ["application/json", "application/csp-report"] }));
+// app.use(bodyParser.json({ type: ["application/json", "application/csp-report"] }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(cors());
 app.set('port', process.env.PORT || 3000);
 const port = 8000;
@@ -70,7 +73,7 @@ app.get('/tasks', async (req, res, next) => {
   }
 });
 
-app.put('/createTask', async (req, res, next) => {
+app.post('/createTask', async (req, res, next) => {
   console.log("createTask!");
   try {
     let planId = req.query.planId;
@@ -80,7 +83,7 @@ app.put('/createTask', async (req, res, next) => {
     db.createNewTask(planId, taskId)
     subTasks.forEach(subTask => {
       // db dump
-      db.createNewSubTask(planId, taskId, subTask)
+      db.createNewSubTask(planId, taskId, subTask);
     });
     res.json({"message":"success"});
   } catch(e){
@@ -88,6 +91,25 @@ app.put('/createTask', async (req, res, next) => {
     res.sendStatus(500);
   }
 });
+
+
+app.put('/updateSubTask', async (req, res, next) => {
+  console.log("updateSubTask!", req.body);
+  try {
+    let planId = req.body.planId;
+    let taskId = req.body.taskId;
+    let subTaskId = req.body.subTaskId;
+    let state = req.body.state;
+
+    db.updateSubTask(planId, taskId, subTaskId, state);
+    res.json({"message":"success"});
+  } catch(e){
+    console.log(e);
+    res.sendStatus(500);
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

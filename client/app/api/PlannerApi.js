@@ -41,7 +41,7 @@ export function getTasks(planId) {
 }
 
 export function createTask(planId, task, subTasks) {
-    let promise = api.put('/createTask?planId='+planId, {'task': task, 'subTasks':subTasks});
+    let promise = api.post('/createTask?planId='+planId, {'task': task, 'subTasks':subTasks});
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }

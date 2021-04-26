@@ -115,7 +115,7 @@ plannerdb.createNewTask = (planId, taskId) => {
 plannerdb.createNewSubTask = (planId, taskId, subTaskId) => {
     return new Promise((resolve, reject) => {
         pool.query(`INSERT INTO SubTasks (planId, taskId, subTaskId, state) VALUES
-                    ('${planId}','${taskId}', '${subTaskId}','todo')`, 
+                    ('${planId}','${taskId}', '${subTaskId}','todo');`, 
                         (err, results) => {
             if(err) {
                 return reject(err);
@@ -124,5 +124,30 @@ plannerdb.createNewSubTask = (planId, taskId, subTaskId) => {
         });
     });
 };
+
+
+// UPDATE SubTasks 
+// SET 
+//     state = 'done'
+// WHERE
+//     planId = 'masters' AND taskId = 'nyu' AND subTaskId = 'recs';
+
+// SELECT * FROM planner.SubTasks;
+
+plannerdb.updateSubTask = (planId, taskId, subTaskId, state) => {
+    return new Promise((resolve, reject) => {
+        console.log(planId, taskId, subTaskId, state);
+        pool.query(`UPDATE SubTasks SET state = '${state}' 
+                    WHERE planId = '${planId}' 
+                    AND taskId = '${taskId}' AND subTaskId = '${subTaskId}';`,
+        (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 
 module.exports = plannerdb;
