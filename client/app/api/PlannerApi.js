@@ -9,6 +9,7 @@ export function helloWorld(setPlanData) {
     return res;
 }
 
+//PLAN API CALLS
 export function getPlans(setPlanData) {
     let promise = api.get('/plans');
     const dataPromise = promise.then((response) => response.data)
@@ -27,8 +28,14 @@ export function createPlan(planId) {
 }
 
 export function deletePlan(planId) {
-    let promise = api.put('/deletePlan', {'planId': planId});
-    console.log("removing plan", planId);
+    let promise = api.delete('/plans?planId='+planId, {'planId': planId});
+    const dataPromise = promise.then((response) => response.data)
+    return dataPromise;
+}
+
+//TASK API CALLS
+export function getTasks(planId) {
+    let promise = api.get('/tasks?planId='+planId, {'planId': planId});
     const dataPromise = promise.then((response) => response.data)
     return dataPromise;
 }

@@ -39,6 +39,7 @@ function goToPlan(){
   plannerContext.setPlanId(props.planId);
   console.log("plannerContext", plannerContext);
 }
+console.log(props.subTask);
 
 function deletePlan(){
   props.removePlanT(props.planId);
@@ -51,6 +52,7 @@ function deletePlan(){
            {props.planId}
         </Typography>
       </CardContent>
+      {props.subTask.map((x) => { return <div><ul key={x}> {x} </ul> </div> })}
       <CardActions>
         <Button onClick={goToPlan} size="small">Go To Plan</Button>
         <Button onClick={deletePlan} ><DeleteIcon/></Button>

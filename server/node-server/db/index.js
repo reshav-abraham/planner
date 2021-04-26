@@ -55,4 +55,27 @@ plannerdb.retrievePlans = (User) => {
 
 };
 
+plannerdb.deletePlan = (planId) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`DELETE FROM planner.Plans WHERE planId = "${planId}";`, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+plannerdb.getTasks = (planId) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT * from planner.Tasks WHERE planId = "${planId}";`, (err, results) => {
+            if(err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+
 module.exports = plannerdb;

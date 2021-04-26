@@ -1,16 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
-import TaskCard from './TaskCard';
 import TaskModal from './TaskModal';
 import { DragDropContext } from "react-beautiful-dnd";
-import Modal from '@material-ui/core/Modal';
 import Column from "./Column";
+import { getTasks } from '../api/PlannerApi';
 // https://material-ui.com/components/material-icons/
 // https://codesandbox.io/s/react-material-ui-drag-and-drop-trello-clone-2-lists-7q46h?file=/src/App.js:664-1080
 import 'date-fns';
@@ -44,34 +38,35 @@ const useStyles = makeStyles({
 });
 
 export default function Plan(props) {
-  const classes = useStyles();
   const plannerContext = useContext(PlannerContext);
-  const [tasks, setTasks] = useState([1,1,1,1,1,1,1,1]);
   const [taskModalVisible, setTaskModalVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+  const [tasks, setTasks] = useState([]);
   const initialColumns = {
     todo: {
       id: "todo",
-      list: [
-        { id: "1", text: "text1" },
-        { id: "2", text: "text2" },
-        { id: "3", text: "text3" }
-      ]
+      list: []
     },
     doing: {
       id: "doing",
-      list: [
-        { id: "4", text: "text4" },
-        { id: "5", text: "text5" },
-        { id: "6", text: "text6" }
-      ]
+      list: []
     },
     done: {
       id: "done",
-      list: [{ id: "4", text: "text7" }]
+      list: []
     }
   };
   const [columns, setColumns] = useState(initialColumns);
+
+  useEffect(()=> {
+    getTasks(plannerContext.planId).then(data => {
+      console.log(data);
+      setTasks(data);
+      // setColumns(JSON.parse(data))
+    })
+    .catch(err => console.log(err))
+
+    },[])
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -83,9 +78,15 @@ export default function Plan(props) {
    console.log("taskModalVisible", taskModalVisible);
   }
 
-  function closeTaskModal(){
-    console.log("close task modal");
+  function closeTaskModal(op, data){
+    console.log("close task modal", op, data);
+    let newColumns = columns;
+    console.log(data);
+    newColumns.todo.list.push({ id: data.task, text: data.task, subTask: data.subTask });
+    setColumns(newColumns);
     setTaskModalVisible(false);
+    // update db
+    
   }
 
 
