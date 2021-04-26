@@ -68,7 +68,7 @@ plannerdb.deletePlan = (planId) => {
 
 plannerdb.getAllTasksFromPlan = (planId) => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT * FROM planner.SubTasks
+        pool.query(`SELECT Tasks.state as taskState, subTaskId, SubTasks.state as subTaskState, Tasks.taskId FROM planner.SubTasks
         INNER JOIN Tasks 
             ON Tasks.taskId=SubTasks.taskId
         INNER JOIN Plans 
