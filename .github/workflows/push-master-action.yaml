@@ -5,7 +5,7 @@ on:
       - master
 
 jobs:
-  Chromatic:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Action
