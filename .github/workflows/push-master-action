@@ -1,0 +1,14 @@
+name: test
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Action
+        uses: actions/checkout@v2
+        run: |
+          echo "cool"
